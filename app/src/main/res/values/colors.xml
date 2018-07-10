@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="tab_text_normal">#212121</color>
+    <color name="comui_tab_text_color">#ff333333</color>
+    <color name="comui_tab_text_selectcolor">#d81e06</color>
+    <color name="mytopbar_color">#d81e06</color>
+    <color name="mytopbar_textcolor">#ff333333</color>
 </resources>
