@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:autoScrollMode="uniform"
-        app:scrollSpeed="0.5"
+        app:scrollSpeed="1"
         app:radiusPercent="0.5" />
 
 </LinearLayout>
