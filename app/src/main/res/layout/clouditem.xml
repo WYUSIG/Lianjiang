@@ -4,14 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:src="@mipmap/android"/>
     <TextView
         android:id="@+id/tcv_tags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10dp"
         />
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@mipmap/android"/>
+
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.example.sig.lianjiang.view.ThemeUtils;
 
 
 import com.example.sig.lianjiang.activity.R;
