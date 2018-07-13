@@ -129,7 +129,7 @@ public class DragDeleteTextView extends TextView {
                         final ImageView imageView = new ImageView(getContext());
                         imageView.setImageResource(R.drawable.clean_anim);
                         decorView.addView(imageView, new ViewGroup.LayoutParams(-2, -2));
-                        Toast.makeText(getContext(),"111",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(),"111",Toast.LENGTH_SHORT).show();
                         imageView.post(new Runnable() {
                             @Override
                             public void run() {
