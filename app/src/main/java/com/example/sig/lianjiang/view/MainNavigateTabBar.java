@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,7 +31,6 @@ import java.util.List;
 public class MainNavigateTabBar extends LinearLayout implements View.OnClickListener {
 
     private static final String KEY_CURRENT_TAG = "com.startsmake.template。currentTag";
-
     private List<ViewHolder> mViewHolderList;
     private OnTabSelectedListener mTabSelectListener;
     private FragmentActivity mFragmentActivity;
@@ -49,8 +49,11 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
     private int mCurrentSelectedTab;
 
+
+
     public MainNavigateTabBar(Context context) {
         this(context, null);
+
     }
 
     public MainNavigateTabBar(Context context, AttributeSet attrs) {
@@ -85,6 +88,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
 
     public void addTab(Class frameLayoutClass, TabParam tabParam) {
+
         int defaultLayout = R.layout.comui_tab_view;
 //        if (tabParam.tabViewResId > 0) {
 //            defaultLayout = tabParam.tabViewResId;
@@ -106,11 +110,20 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
         holder.tabIcon = (ImageView) view.findViewById(R.id.tab_icon);
         holder.tabTitle = ((TextView) view.findViewById(R.id.tab_title));
-
+        holder.messagenum=(DragDeleteTextView)view.findViewById(R.id.message_num);
+        holder.tip=(ImageView)view.findViewById(R.id.tab_tip);
         if (TextUtils.isEmpty(tabParam.title)) {
             holder.tabTitle.setVisibility(View.INVISIBLE);
         } else {
-            holder.tabTitle.setText(tabParam.title);
+            holder.tabTitle.setText(tabParam.title);                        //修改标志
+            if(tabParam.title.equals("消息")){
+                holder.messagenum.setVisibility(View.VISIBLE);
+
+                holder.tip.setVisibility(View.INVISIBLE);
+            }else {
+                holder.messagenum.setVisibility(View.INVISIBLE);
+                holder.tip.setVisibility(View.VISIBLE);
+            }
         }
 
         if (mTabTextSize != 0) {
@@ -139,6 +152,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         addView(view, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0F));
 
     }
+
 
     @Override
     protected void onAttachedToWindow() {
@@ -313,6 +327,8 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         public TextView tabTitle;
         public Class fragmentClass;
         public int tabIndex;
+        public DragDeleteTextView messagenum;
+        public ImageView tip;
     }
 
 
@@ -324,13 +340,14 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         //        public int tabViewResId;
         public String title;
 
+
         public TabParam(int iconResId, int iconSelectedResId, String title) {
             this.iconResId = iconResId;
             this.iconSelectedResId = iconSelectedResId;
             this.title = title;
         }
 
-        public TabParam(int iconResId, int iconSelectedResId, int titleStringRes) {
+            public TabParam(int iconResId, int iconSelectedResId, int titleStringRes) {
             this.iconResId = iconResId;
             this.iconSelectedResId = iconSelectedResId;
             this.titleStringRes = titleStringRes;

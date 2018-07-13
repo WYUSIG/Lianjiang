@@ -6,7 +6,10 @@
     <color name="tab_text_normal">#212121</color>
     <color name="comui_tab_text_color">#ff333333</color>
     <color name="comui_tab_text_selectcolor">#d81e06</color>
-    <color name="mytopbar_color">#d81e06</color>
+    <color name="mytopbar_color">@android:color/holo_red_dark</color>
     <color name="mytopbar_textcolor">#ff333333</color>
     <color name="tip_num_color">#FFFFFF</color>
+    <color name="delete">@android:color/holo_red_dark</color>
+    <color name="first">@android:color/darker_gray</color>
+    <color name="no_read">#FF8C00</color>
 </resources>

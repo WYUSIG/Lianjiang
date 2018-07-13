@@ -32,6 +32,7 @@ public class DragDeleteTextView extends TextView {
     private ViewParent parentView;
     private TextView counterfeitView;
     private CircleAndPathView circleView;
+    private OnDeleteTextListener monDeleteTextListener;
     private float pX = 0;
     private float pY = 0;
     private static int connectedColor = Color.RED;
@@ -69,6 +70,16 @@ public class DragDeleteTextView extends TextView {
                 return false;
             }
         });
+    }
+    /*
+    *回调接口
+     */
+    public interface OnDeleteTextListener{
+        void onDelete();
+    }
+
+    public void setOnDeleteTextListener(OnDeleteTextListener onDeleteTextListener){
+        monDeleteTextListener = onDeleteTextListener;
     }
 
     @Override
@@ -118,6 +129,7 @@ public class DragDeleteTextView extends TextView {
                         final ImageView imageView = new ImageView(getContext());
                         imageView.setImageResource(R.drawable.clean_anim);
                         decorView.addView(imageView, new ViewGroup.LayoutParams(-2, -2));
+                        Toast.makeText(getContext(),"111",Toast.LENGTH_SHORT).show();
                         imageView.post(new Runnable() {
                             @Override
                             public void run() {
@@ -130,9 +142,9 @@ public class DragDeleteTextView extends TextView {
                     }
                 }
                 parentView.requestDisallowInterceptTouchEvent(false);
+                //monDeleteTextListener.onDelete();
                 break;
         }
-
         return true;
     }
 

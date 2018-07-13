@@ -1,6 +1,7 @@
 package com.example.sig.lianjiang.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.util.Log;
@@ -8,32 +9,77 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
+import com.example.sig.lianjiang.activity.MainActivity;
 import com.example.sig.lianjiang.activity.R;
 import com.example.sig.lianjiang.adapter.Message;
 import com.example.sig.lianjiang.adapter.MessageAdapter;
 import com.example.sig.lianjiang.utils.ListviewUtils;
 import com.example.sig.lianjiang.view.MyListView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * Created by sig on 2018/7/9.
  */
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRefreshListener {
     private List<Message> lists = new ArrayList<>();
     private MyListView listView;
+    private MessageAdapter messageAdapter;
+    private TextView tv_pull_to_refresh;
+    private final static int REFRESH_COMPLETE = 0;
+    private static final int UPDATE_TEXT_DONE=1;
+    private static final int UPDATE_TEXT_STAR=2;
+    /**
+     * mInterHandler是一个私有静态内部类继承自Handler，内部持有MainActivity的弱引用，
+     * 避免内存泄露
+     */
+    private InterHandler mInterHandler = new InterHandler(this);
+
+    private  class InterHandler extends Handler {
+        private WeakReference<MessageFragment> mActivity;
+        public InterHandler(MessageFragment activity){
+            mActivity = new WeakReference<MessageFragment>(activity);
+        }
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            MessageFragment activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case REFRESH_COMPLETE:
+                        activity.listView.setOnRefreshComplete();
+                        activity.messageAdapter.notifyDataSetChanged();
+                        activity.listView.setSelection(0);
+                        break;
+                    case UPDATE_TEXT_DONE:
+                        tv_pull_to_refresh.setText("刷新完成");
+                        listView.fin();
+                        break;
+                    case UPDATE_TEXT_STAR:
+                        tv_pull_to_refresh.setText("下拉刷新");
+                        break;
+                }
+            }else{
+                super.handleMessage(msg);
+            }
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_message, container, false);
         init();
+        tv_pull_to_refresh=view.findViewById(R.id.tv_pull_to_refresh);
         listView = (MyListView) view.findViewById(R.id.list_view);
-        MessageAdapter messageAdapter=new MessageAdapter(getActivity(),R.layout.message_item_view,lists);
+        messageAdapter=new MessageAdapter(getActivity(),R.layout.message_item_view,lists);
         listView.setAdapter(messageAdapter);
-        //setListViewHeightBasedOnChildren(listView);
+        listView.setOnMeiTuanRefreshListener(this);
         return view;
     }
     private void init(){
@@ -42,29 +88,26 @@ public class MessageFragment extends Fragment {
             lists.add(message);
         }
     }
-    public static void setListViewHeightBasedOnChildren(MyListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        Log.e("222",Integer.toString(totalHeight));
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() *
-                (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        Log.e("111",Integer.toString(params.height));
-        listView.setLayoutParams(params);
-        listView.invalidate();
+
+    @Override
+    public void onRefresh() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    mInterHandler.sendEmptyMessage(UPDATE_TEXT_DONE);
+                    Thread.sleep(1000);
+                    mInterHandler.sendEmptyMessage(REFRESH_COMPLETE);
+                    mInterHandler.sendEmptyMessage(UPDATE_TEXT_STAR);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+
+
 }

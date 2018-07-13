@@ -24,13 +24,13 @@
             android:layout_centerInParent="true"
             android:text="@string/mytopbar_friend"
             android:textColor="@color/mytopbar_textcolor"
-            android:textSize="16sp" />
+            android:textSize="@dimen/mytopbar_textsize" />
 
         <ImageView
             android:id="@+id/top_more"
             android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/more" />
         <TextView
             android:id="@+id/top_margin"
@@ -40,8 +40,8 @@
         <ImageView
             android:id="@+id/top_search"
             android:layout_toLeftOf="@+id/top_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/search" />
     </RelativeLayout>
 </LinearLayout>

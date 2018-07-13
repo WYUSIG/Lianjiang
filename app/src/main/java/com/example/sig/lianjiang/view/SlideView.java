@@ -54,7 +54,7 @@ public class SlideView extends LinearLayout {
                         e.printStackTrace();
                     }
                 }else
-                    mDeleteWidth = getChildAt(1).getWidth();
+                    mDeleteWidth = getChildAt(1).getWidth()+getChildAt(2).getWidth()+getChildAt(3).getWidth();
                 break;
             case MotionEvent.ACTION_MOVE:
                 moveAction(event);
