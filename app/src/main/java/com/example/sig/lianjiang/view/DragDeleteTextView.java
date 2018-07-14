@@ -75,7 +75,7 @@ public class DragDeleteTextView extends TextView {
     *回调接口
      */
     public interface OnDeleteTextListener{
-        void onDelete();
+        void onDelete(View view);
     }
 
     public void setOnDeleteTextListener(OnDeleteTextListener onDeleteTextListener){
@@ -142,11 +142,12 @@ public class DragDeleteTextView extends TextView {
                     }
                 }
                 parentView.requestDisallowInterceptTouchEvent(false);
-                //monDeleteTextListener.onDelete();
+                monDeleteTextListener.onDelete(this);
                 break;
         }
         return true;
     }
+
 
     protected TextView cloneView() {
         TextView textView = new TextView(getContext());

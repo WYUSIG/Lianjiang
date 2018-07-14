@@ -1,6 +1,7 @@
 package com.example.sig.lianjiang.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sig.lianjiang.activity.R;
+import com.example.sig.lianjiang.view.DragDeleteTextView;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class MessageAdapter extends ArrayAdapter<Message>{
     public View getView(int position,View convertView,ViewGroup parent){
         Message message=getItem(position);
         View view;
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView==null){
             view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder=new ViewHolder();
@@ -34,7 +36,13 @@ public class MessageAdapter extends ArrayAdapter<Message>{
             viewHolder.userName=(TextView)view.findViewById(R.id.user_name);
             viewHolder.mainMean=(TextView)view.findViewById(R.id.main_mean);
             viewHolder.time=(TextView)view.findViewById(R.id.message_time);
-            viewHolder.messageNum=(TextView)view.findViewById(R.id.message_num);
+            viewHolder.messageNum=(DragDeleteTextView)view.findViewById(R.id.message_num);
+            viewHolder.messageNum.setOnDeleteTextListener(new DragDeleteTextView.OnDeleteTextListener() {     //监听函数
+                @Override
+                public void onDelete(View view) {
+                    //viewHolder.messageNum.setVisibility(View.INVISIBLE);
+                }
+            });
             view.setTag(viewHolder);
         }else {
             view=convertView;
@@ -45,13 +53,17 @@ public class MessageAdapter extends ArrayAdapter<Message>{
         viewHolder.mainMean.setText(message.getMainMean());
         viewHolder.time.setText(message.getTime());
         viewHolder.messageNum.setText(Integer.toString(message.getMessageNum()));
+
         return view;
+    }
+    public static void aaa(){
+
     }
     class ViewHolder{
         ImageView userHead;
         TextView userName;
         TextView mainMean;
         TextView time;
-        TextView messageNum;
+        DragDeleteTextView messageNum;
     }
 }

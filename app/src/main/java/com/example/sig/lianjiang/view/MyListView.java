@@ -57,7 +57,7 @@ public class MyListView extends ListView implements AbsListView.OnScrollListener
     private MeiTuanRefreshThirdStepView mThirdView;
     private AnimationDrawable thirdAnim;
     private SlideView itemView;
-
+    private DragDeleteTextView messageNum;
     public MyListView(Context context) {
         super(context);
         init(context);
@@ -109,7 +109,6 @@ public class MyListView extends ListView implements AbsListView.OnScrollListener
         mThirdView = (MeiTuanRefreshThirdStepView) headerView.findViewById(R.id.third_view);
         mThirdView.setBackgroundResource(R.drawable.pull_to_refresh_third_anim);
         thirdAnim = (AnimationDrawable) mThirdView.getBackground();
-
         measureView(headerView);
         addHeaderView(headerView);
         headerViewHeight = headerView.getMeasuredHeight();

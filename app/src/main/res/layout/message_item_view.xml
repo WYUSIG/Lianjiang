@@ -51,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="5dip"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -71,6 +72,7 @@
                 android:paddingRight="5dp"
                 android:text="9"
                 android:textColor="@color/tip_num_color" />
+
         </LinearLayout>
     </LinearLayout>
     <TextView

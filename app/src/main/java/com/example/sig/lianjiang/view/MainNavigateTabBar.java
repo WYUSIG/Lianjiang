@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.sig.lianjiang.view.ThemeUtils;
 
 
@@ -85,7 +87,10 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
         mViewHolderList = new ArrayList<>();
     }
-
+//    @Override
+//    public void onDelete(){
+//        Toast.makeText(getContext(),"2333",Toast.LENGTH_SHORT).show();
+//    }
 
     public void addTab(Class frameLayoutClass, TabParam tabParam) {
 
@@ -111,6 +116,12 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         holder.tabIcon = (ImageView) view.findViewById(R.id.tab_icon);
         holder.tabTitle = ((TextView) view.findViewById(R.id.tab_title));
         holder.messagenum=(DragDeleteTextView)view.findViewById(R.id.message_num);
+        holder.messagenum.setOnDeleteTextListener(new DragDeleteTextView.OnDeleteTextListener() {
+            @Override
+            public void onDelete(View view) {
+                Toast.makeText(getContext(),"2333",Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.tip=(ImageView)view.findViewById(R.id.tab_tip);
         if (TextUtils.isEmpty(tabParam.title)) {
             holder.tabTitle.setVisibility(View.INVISIBLE);
