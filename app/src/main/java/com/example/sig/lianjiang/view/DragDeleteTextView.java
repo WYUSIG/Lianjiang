@@ -147,8 +147,28 @@ public class DragDeleteTextView extends TextView {
         }
         return true;
     }
-
-
+    public void setDelete(final int x,final int y){
+        if (counterfeitView != null) {
+            decorView.removeView(counterfeitView);
+        }
+        final ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource(R.drawable.clean_anim);
+        decorView.addView(imageView, new ViewGroup.LayoutParams(-2, -2));
+        //Toast.makeText(getContext(),"111",Toast.LENGTH_SHORT).show();
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setX(x - pX + getWidth() / 2 - imageView.getWidth() / 2);
+                imageView.setY(y - pY + getHeight() / 2 - imageView.getHeight() / 2);
+            }
+        });
+        AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
+        animationDrawable.start();
+        parentView.requestDisallowInterceptTouchEvent(false);
+    }
+    public  void setDelete(){
+        setVisibility(INVISIBLE);
+    }
     protected TextView cloneView() {
         TextView textView = new TextView(getContext());
         textView.setText(getText());

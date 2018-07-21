@@ -20,6 +20,7 @@ import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<Message>{
     private int resourceId;
+    public static int flag=0;
     public MessageAdapter(Context context, int textViewResourceId, List<Message> object){
         super(context,textViewResourceId,object);
         resourceId=textViewResourceId;
@@ -37,13 +38,14 @@ public class MessageAdapter extends ArrayAdapter<Message>{
             viewHolder.mainMean=(TextView)view.findViewById(R.id.main_mean);
             viewHolder.time=(TextView)view.findViewById(R.id.message_time);
             viewHolder.messageNum=(DragDeleteTextView)view.findViewById(R.id.message_num);
+
+            //
             viewHolder.messageNum.setOnDeleteTextListener(new DragDeleteTextView.OnDeleteTextListener() {     //监听函数
                 @Override
                 public void onDelete(View view) {
                     //viewHolder.messageNum.setVisibility(View.INVISIBLE);
                 }
             });
-            view.setTag(viewHolder);
         }else {
             view=convertView;
             viewHolder=(ViewHolder)view.getTag();
@@ -53,12 +55,15 @@ public class MessageAdapter extends ArrayAdapter<Message>{
         viewHolder.mainMean.setText(message.getMainMean());
         viewHolder.time.setText(message.getTime());
         viewHolder.messageNum.setText(Integer.toString(message.getMessageNum()));
-
+        if (message.getMessageNum()>0){
+            viewHolder.messageNum.setText(Integer.toString(message.getMessageNum()));
+        }else {
+            viewHolder.messageNum.setVisibility(View.INVISIBLE);
+        }
+        view.setTag(viewHolder);
         return view;
     }
-    public static void aaa(){
 
-    }
     class ViewHolder{
         ImageView userHead;
         TextView userName;

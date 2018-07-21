@@ -26,7 +26,7 @@
      private static final String TAG_PAGE_STAR = "星球";
      private DragDeleteTextView messageNum;
 
-     private MainNavigateTabBar mNavigateTabBar;
+     public static MainNavigateTabBar mNavigateTabBar;
 
      @Override
      protected void onCreate(Bundle savedInstanceState) {

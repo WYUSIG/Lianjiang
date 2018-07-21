@@ -16,6 +16,7 @@ import com.example.sig.lianjiang.activity.R;
 import com.example.sig.lianjiang.adapter.Message;
 import com.example.sig.lianjiang.adapter.MessageAdapter;
 import com.example.sig.lianjiang.utils.ListviewUtils;
+import com.example.sig.lianjiang.view.MainNavigateTabBar;
 import com.example.sig.lianjiang.view.MyListView;
 
 import java.lang.ref.WeakReference;
@@ -80,6 +81,15 @@ public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRef
         messageAdapter=new MessageAdapter(getActivity(),R.layout.message_item_view,lists);
         listView.setAdapter(messageAdapter);
         listView.setOnMeiTuanRefreshListener(this);
+        MainActivity.mNavigateTabBar.setOnCleanMessageTip(new MainNavigateTabBar.OnCleanMessageTip() {
+            @Override
+            public void onClean() {
+                for (int i=0;i<lists.size();i++){
+                    lists.set(i,new Message(R.mipmap.android,"SIG","最近怎么样？","21:45",0));
+                }
+                messageAdapter.notifyDataSetChanged();
+            }
+        });
         return view;
     }
     private void init(){

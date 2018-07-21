@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sig.lianjiang.adapter.MessageAdapter;
 import com.example.sig.lianjiang.view.ThemeUtils;
 
 
@@ -51,6 +52,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
     private int mCurrentSelectedTab;
 
+    private OnCleanMessageTip monCleanMessageTip;
 
 
     public MainNavigateTabBar(Context context) {
@@ -87,10 +89,18 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
         mViewHolderList = new ArrayList<>();
     }
-//    @Override
-//    public void onDelete(){
-//        Toast.makeText(getContext(),"2333",Toast.LENGTH_SHORT).show();
-//    }
+
+    /*
+    *回调接口
+     */
+
+    public interface OnCleanMessageTip{
+        public void onClean();
+    }
+
+    public void setOnCleanMessageTip(OnCleanMessageTip onCleanMessageTip){
+        monCleanMessageTip=onCleanMessageTip;
+    }
 
     public void addTab(Class frameLayoutClass, TabParam tabParam) {
 
@@ -119,6 +129,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         holder.messagenum.setOnDeleteTextListener(new DragDeleteTextView.OnDeleteTextListener() {
             @Override
             public void onDelete(View view) {
+                monCleanMessageTip.onClean();
                 Toast.makeText(getContext(),"2333",Toast.LENGTH_SHORT).show();
             }
         });
