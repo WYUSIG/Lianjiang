@@ -40,6 +40,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-plus:11.0.4'
     compile 'com.moxun:tagcloudlib:1.2.0'
     compile 'com.github.SilenceDut:jpinyin:v1.0'
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    compile files('libs/eventbus-2.4.0.jar')
     testCompile 'junit:junit:4.12'
 
 }

@@ -139,10 +139,10 @@ public class DragDeleteTextView extends TextView {
                         });
                         AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
                         animationDrawable.start();
+                        monDeleteTextListener.onDelete(this);
                     }
                 }
                 parentView.requestDisallowInterceptTouchEvent(false);
-                monDeleteTextListener.onDelete(this);
                 break;
         }
         return true;

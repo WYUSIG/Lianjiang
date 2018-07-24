@@ -1,6 +1,7 @@
 package com.example.sig.lianjiang.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,24 +14,83 @@ import com.example.sig.lianjiang.activity.R;
 import com.example.sig.lianjiang.adapter.FriendAdapter;
 import com.example.sig.lianjiang.bean.ContactPerson;
 import com.example.sig.lianjiang.utils.Utils;
+import com.example.sig.lianjiang.view.MyExpandableListView;
 import com.example.sig.lianjiang.view.QuickIndexBar;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
  * Created by sig on 2018/7/9.
  */
 
-public class FriendFragment extends Fragment {
-    private ExpandableListView mExpandableListView;
+public class FriendFragment extends Fragment implements MyExpandableListView.OnMeiTuanRefreshListener{
+    private MyExpandableListView mExpandableListView;
     ArrayList<ArrayList<ContactPerson>> contactPersonsList;
     private QuickIndexBar mQuickIndexBar;
     private TextView mTextDialog;
+    private FriendAdapter friendAdapter;
+    private TextView tv_pull_to_refresh;
+    private final static int REFRESH_COMPLETE = 0;
+    private static final int UPDATE_TEXT_DONE=1;
+    private static final int UPDATE_TEXT_STAR=2;
+
+    private FriendFragment.InterHandler mInterHandler = new FriendFragment.InterHandler(this);
+
+    private  class InterHandler extends Handler {
+        private WeakReference<FriendFragment> mActivity;
+        public InterHandler(FriendFragment activity){
+            mActivity = new WeakReference<FriendFragment>(activity);
+        }
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            FriendFragment activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case REFRESH_COMPLETE:
+                        activity.mExpandableListView.setOnRefreshComplete();
+                        activity.friendAdapter.notifyDataSetChanged();
+                        activity.mExpandableListView.setSelection(0);
+                        break;
+                    case UPDATE_TEXT_DONE:
+                        tv_pull_to_refresh.setText("刷新完成");
+                        mExpandableListView.fin();
+                        break;
+                    case UPDATE_TEXT_STAR:
+                        tv_pull_to_refresh.setText("下拉刷新");
+                        break;
+                }
+            }else{
+                super.handleMessage(msg);
+            }
+        }
+    }
+    @Override
+    public void onRefresh() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    mInterHandler.sendEmptyMessage(UPDATE_TEXT_DONE);
+                    Thread.sleep(1000);
+                    mInterHandler.sendEmptyMessage(REFRESH_COMPLETE);
+                    mInterHandler.sendEmptyMessage(UPDATE_TEXT_STAR);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_friend, container, false);
-        mExpandableListView = (ExpandableListView) view.findViewById(R.id.address_expandable_listview);
+        mExpandableListView = (MyExpandableListView) view.findViewById(R.id.address_expandable_listview);
+        mExpandableListView.setOnMeiTuanRefreshListener(this);
+        tv_pull_to_refresh=view.findViewById(R.id.tv_pull_to_refresh);
         mTextDialog = (TextView) view.findViewById(R.id.text_dialog);
         mQuickIndexBar = (QuickIndexBar) view.findViewById(R.id.quick_index_bar);
         initData();
@@ -46,6 +106,7 @@ public class FriendFragment extends Fragment {
      */
     private void initData() {
         contactPersonsList = Utils.getSortDataList(getActivity(),"person_name.txt");
+        friendAdapter=new FriendAdapter(getActivity(), contactPersonsList);
     }
 
     /**
@@ -53,7 +114,7 @@ public class FriendFragment extends Fragment {
      */
     private void setListView() {
         /**设置适配器*/
-        mExpandableListView.setAdapter(new FriendAdapter(getActivity(), contactPersonsList));
+        mExpandableListView.setAdapter(friendAdapter);
 
         /**设置group不可点击*/
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

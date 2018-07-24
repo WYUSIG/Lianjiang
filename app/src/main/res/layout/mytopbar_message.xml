@@ -26,6 +26,12 @@
             android:textColor="@color/mytopbar_textcolor"
             android:textSize="@dimen/mytopbar_textsize" />
 
+        <com.example.sig.lianjiang.view.CircleImageView
+            android:id="@+id/top_head"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/android"/>
         <ImageView
             android:id="@+id/top_right"
             android:layout_alignParentRight="true"

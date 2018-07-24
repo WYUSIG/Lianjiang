@@ -16,6 +16,7 @@ import com.example.sig.lianjiang.activity.R;
 import com.example.sig.lianjiang.adapter.Message;
 import com.example.sig.lianjiang.adapter.MessageAdapter;
 import com.example.sig.lianjiang.utils.ListviewUtils;
+import com.example.sig.lianjiang.view.CircleImageView;
 import com.example.sig.lianjiang.view.MainNavigateTabBar;
 import com.example.sig.lianjiang.view.MyListView;
 
@@ -29,11 +30,12 @@ import java.util.List;
  * Created by sig on 2018/7/9.
  */
 
-public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRefreshListener {
+public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRefreshListener,View.OnClickListener{
     private List<Message> lists = new ArrayList<>();
     private MyListView listView;
     private MessageAdapter messageAdapter;
     private TextView tv_pull_to_refresh;
+    private CircleImageView topHead;
     private final static int REFRESH_COMPLETE = 0;
     private static final int UPDATE_TEXT_DONE=1;
     private static final int UPDATE_TEXT_STAR=2;
@@ -75,6 +77,8 @@ public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRef
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_message, container, false);
+        topHead=view.findViewById(R.id.top_head);
+        topHead.setOnClickListener(this);
         init();
         tv_pull_to_refresh=view.findViewById(R.id.tv_pull_to_refresh);
         listView = (MyListView) view.findViewById(R.id.list_view);
@@ -119,5 +123,13 @@ public class MessageFragment extends Fragment implements MyListView.OnMeiTuanRef
         }).start();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+             case R.id.top_head:
+                 MainActivity.leftDrawerLayout.openDrawer();
+                 break;
 
+        }
+    }
 }

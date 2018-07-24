@@ -7,4 +7,9 @@
         <attr name="navigateTabTextSize" format="dimension|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="inner_padding" format="dimension" />
+    </declare-styleable>
 </resources>
