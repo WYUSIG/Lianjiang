@@ -39,7 +39,7 @@ public class MessageAdapter extends ArrayAdapter<Message>{
             viewHolder.time=(TextView)view.findViewById(R.id.message_time);
             viewHolder.messageNum=(DragDeleteTextView)view.findViewById(R.id.message_num);
 
-            //
+
             viewHolder.messageNum.setOnDeleteTextListener(new DragDeleteTextView.OnDeleteTextListener() {     //监听函数
                 @Override
                 public void onDelete(View view) {
