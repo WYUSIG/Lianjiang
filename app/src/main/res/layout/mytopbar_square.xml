@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mytopbar_square"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mytopbar_color"
+    android:background="@color/transparent"
     android:minHeight="?attr/actionBarSize"
     android:gravity="center"
     android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,26 +23,16 @@
             android:gravity="center"
             android:layout_weight="1"
             android:layout_centerInParent="true"
-            android:text="@string/mytopbar_friend"
-            android:textColor="@color/mytopbar_textcolor"
+            android:text=""
+            android:textColor="@color/white"
             android:textSize="@dimen/mytopbar_textsize" />
 
         <ImageView
-            android:id="@+id/top_more"
-            android:layout_alignParentRight="true"
+            android:id="@+id/top_left"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/more" />
-        <TextView
-            android:id="@+id/top_margin"
-            android:layout_width="8dp"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/top_more"/>
-        <ImageView
-            android:id="@+id/top_search"
-            android:layout_toLeftOf="@+id/top_margin"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/search" />
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back"/>
+
     </RelativeLayout>
 </LinearLayout>
