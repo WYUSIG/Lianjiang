@@ -143,7 +143,7 @@ public class SquareActivity extends AppCompatActivity implements ObservableListV
         initListData();
         initView();
 
-        mListView.setOnMeiTuanRefreshListener(this);
+//        mListView.setOnMeiTuanRefreshListener(this);
     }
 
 
